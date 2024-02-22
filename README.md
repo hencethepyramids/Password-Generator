@@ -1,38 +1,45 @@
-Password Generator
-This script generates a random password with a specified length and requirements.
+# Password Generator
 
-Requirements
-At least one uppercase letter
-At least one digit
-At least one punctuation character (excluding any specified by the user)
-The remaining characters are randomly chosen from all character types
-Usage
-Run the script using a Python interpreter.
-Enter the desired password length (between 8 and 30 characters).
-Enter any special characters to exclude (comma-separated, or 'none').
-The script will generate a password that meets the specified requirements and print it to the console.
-Dependencies
-Python 3.x
-secrets module (included in Python 3.6 and later)
-random module (included in Python standard library)
-string module (included in Python standard library)
-Notes
-The password is generated using the secrets module to ensure cryptographically strong randomness.
-The password is shuffled using random.SystemRandom().shuffle() to further ensure randomness.
-The user can specify any number between 8 and 30 for the password length.
-The user can specify any number of uppercase letters, digits, and punctuation characters to include in the password.
-The user can specify any number of punctuation characters to exclude from the password.
-The remaining characters are randomly chosen from all character types.
-The password is generated with a minimum length of 8 characters, including at least one uppercase letter, one digit, and one punctuation character.
-The password is generated with a maximum length of 30 characters.
-The password is generated with a maximum of 10 uppercase letters, 10 digits, and 10 punctuation characters.
-The remaining characters are randomly chosen from all character types.
-The password is generated with a minimum of 1 character from each character type.
-The password is generated with a maximum of 26 characters from the lowercase character type.
-The password is generated with a maximum of 10 characters from each of the other character types.
-The password is generated with a minimum of 1 character from each character type.
-Example
-Enter the desired password length (between 8 and 30 characters): 12 Enter any special characters to exclude (comma-separated, or 'none'): , 5&Jt9$7Lp
+A simple password generator in Python. The user can choose the length of the password, and specify any special characters to exclude.
 
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+## Usage
+
+1. Run the script in a Python environment.
+2. Enter the desired password length when prompted. The length must be between 8 and 30 characters.
+3. Enter any special characters to exclude, separated by commas. If no characters should be excluded, enter 'none'.
+
+## Example
+
+```python
+import secrets
+import random
+import string
+
+def generate_password(length=15, min_upper=1, min_digits=1, min_punct=1, exclude_punct=None):
+    # ... (same code as in your script)
+
+# Prompt the user to enter the desired password length
+while True:
+    length_input = input("Enter the desired password length (between 8 and 30 characters): ")
+    if length_input.isdigit() and 8 <= int(length_input) <= 30:
+        length = int(length_input)
+        break
+    else:
+        print("Invalid length. Please enter a value between 8 and 30.")
+
+# Prompt the user to specify any special characters to exclude
+exclude_punct = None
+while True:
+    punct_input = input("Enter any special characters to exclude (comma-separated, or 'none'): ")
+    if punct_input.lower() == "none":
+        exclude_punct = None
+        break
+    else:
+        exclude_punct = set(punct_input.split(","))
+        if not all(char in string.punctuation for char in exclude_punct):
+            print("Invalid characters specified. Please enter a comma-separated list of valid punctuation characters to exclude.")
+        else:
+            break
+
+# Generate the password with the specified length and requirements
+print(generate_password(length, min_upper=1, min_digits=1, min_punct=1, exclude_punct=exclude_punct))
